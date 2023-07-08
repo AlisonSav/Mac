@@ -63,10 +63,10 @@ class DishList(ListView):
     context_object_name = "dish"
 
     def get_queryset(self):
-        return Restaurant.objects.prefetch_related("dish_set", "dish_set__product_set").annotate(
-            dish_product_count=Count("product_set__product_id")
-        )  # something goes wrong...
-        # return Dish.objects.annotate(product_count=Count("product__id")).all()  # I get 151 SQL query
+        # return Restaurant.objects.prefetch_related("dish_set", "dish_set__product_set").annotate(
+        #     dish_product_count=Count("product_set__product_id")
+        # )  # something goes wrong...
+        return Dish.objects.annotate(product_count=Count("product__id")).all()  # I get 151 SQL query
         # return Restaurant.objects.prefetch_related("dish_set").annotate(product_count=Count("product__id"))  # Can't
         # add annotate
 

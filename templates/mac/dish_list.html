@@ -11,7 +11,7 @@
             <legend><h2>Dishes list: </h2></legend>
             <ul>
                 {% for di in dish %}
-                    <li><a href="{% url 'mac:dish_detail' di.id %}">{{ di }}</a>   Product count: {{ di.dish_product_count }}</li>
+                    <li><a href="{% url 'mac:dish_detail' di.id %}">{{ di }}</a>   Product count: {{ di.product_count }}</li>
                 {% endfor %}
             </ul>
         </fieldset>
