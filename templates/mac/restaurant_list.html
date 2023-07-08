@@ -1,0 +1,20 @@
+{% extends 'mac/base.html' %}
+{% block title %} {% endblock title %}
+{% load static %}
+{% block css_additional %}
+    <link rel="stylesheet" href="{% static 'mac/style.css' %}">
+{% endblock css_additional %}
+{% block content %}
+    <form action="{% url 'mac:restaurant_list' %}" method="GET">
+        {% csrf_token %}
+        <fieldset>
+            <legend><h2>Restaurants list: </h2></legend>
+            <ul>
+                {% for rest in restaurant %}
+                    <li><a href="{% url 'mac:restaurant_detail' rest.id %}">{{ rest }}</a>  Dishes count: {{ rest.dish_count }}</li>
+                {% endfor %}
+            </ul>
+        </fieldset>
+    </form>
+    {% include 'mac/return_index.html' %}
+{% endblock content %}

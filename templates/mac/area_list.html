@@ -1,0 +1,20 @@
+{% extends 'mac/base.html' %}
+{% block title %} Index {% endblock title %}
+{% load static %}
+{% block css_additional %}
+    <link rel="stylesheet" href="{% static 'mac/style.css' %}">
+{% endblock css_additional %}
+{% block content %}
+    <form action="{% url 'mac:area_list' %}" method="GET">
+        {% csrf_token %}
+        <fieldset>
+            <legend><h2>Areas list: </h2></legend>
+            <ul>
+                {% for ar in area %}
+                    <li><a href="{% url 'mac:area_detail' ar.id %}">{{ ar }}</a>  Restaurant count: {{ ar.restaurant_count }}</li>
+                {% endfor %}
+            </ul>
+        </fieldset>
+    </form>
+    {% include 'mac/return_index.html' %}
+{% endblock content %}

@@ -1,0 +1,22 @@
+{% extends 'mac/base.html' %}
+
+
+{% block title %} Index {% endblock title %}
+{% load static %}
+{% block css_additional %}
+    <link rel="stylesheet" href="{% static 'mac/style.css' %}">
+{% endblock css_additional %}
+{% block content %}
+    <form action="{% url 'mac:index' %}" method="GET">
+        {% csrf_token %}
+        <fieldset>
+            <legend><h2>Models list: </h2></legend>
+            <ul>
+                <li><a href="{% url 'mac:area_list' %}">Areas</a></li>
+                <li><a href="{% url 'mac:restaurant_list'%}">Restaurants</a></li>
+                <li><a href="{% url 'mac:product_list' %}">Products</a></li>
+                <li><a href="{% url 'mac:dish_list' %}">Dishes</a></li>
+            </ul>
+        </fieldset>
+    </form>
+{% endblock content %}

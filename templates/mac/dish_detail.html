@@ -1,0 +1,20 @@
+{% extends 'mac/base.html' %}
+{% block title %} {% endblock title %}
+{% load static %}
+{% block css_additional %}
+    <link rel="stylesheet" href="{% static 'mac/style.css' %}">
+{% endblock css_additional %}
+{% block content %}
+    <form action="{% url 'mac:dish_detail' dish.id %}" method="GET">
+        {% csrf_token %}
+        <fieldset>
+            <legend><h2>Dish Information: </h2></legend>
+            <h3>{{ dish }}</h3>
+            <ul>In: {{ dish.restaurant }}</ul>
+            <br>
+            <br>
+        </fieldset>
+    </form>
+    <a href="{% url 'mac:dish_list' %}">Return to Dish list</a>
+    {% include 'mac/return_index.html' %}
+{% endblock content %}
