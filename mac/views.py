@@ -1,4 +1,4 @@
-from django.db.models import Count
+from django.db.models import Count, Prefetch
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView
 
@@ -63,12 +63,9 @@ class DishList(ListView):
     context_object_name = "dish"
 
     def get_queryset(self):
-        # return Restaurant.objects.prefetch_related("dish_set", "dish_set__product_set").annotate(
-        #     dish_product_count=Count("product_set__product_id")
-        # )  # something goes wrong...
-        return Dish.objects.annotate(product_count=Count("product__id")).all()  # I get 151 SQL query
-        # return Restaurant.objects.prefetch_related("dish_set").annotate(product_count=Count("product__id"))  # Can't
-        # add annotate
+        dishes_with_product_count = Dish.objects.annotate(product_count=Count("product__id"))
+        r = Restaurant.objects.prefetch_related(Prefetch("dish_set", queryset=dishes_with_product_count))
+        return r
 
 
 class DishDetail(DetailView):
