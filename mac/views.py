@@ -1,8 +1,14 @@
 from django.db.models import Count, Prefetch
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.template import loader
+from django.urls import reverse
 from django.views.generic import DetailView, ListView
+from django.core.mail import send_mail
+from django.conf import settings
 
+from mac import tasks
 from mac.models import Area, Dish, Product, Restaurant
+from mac.forms import ContactForm, ReminderForm
 
 
 def index(request):
@@ -73,3 +79,39 @@ class DishDetail(DetailView):
 
     def get_queryset(self):
         return Dish.objects.select_related("restaurant").all()
+
+
+def contact_us(request):
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            send_mail(
+                form.cleaned_data.get("subject"),
+                loader.render_to_string("mac/template_email.html", {"message": form.cleaned_data.get("message")}),
+                settings.NOREPLY_EMAIL,
+                [form.cleaned_data.get("from_email")],
+                fail_silently=False,
+            )
+            return redirect(reverse("mac:index"))
+    else:
+        form = ContactForm()
+    return render(request, "mac/contact_us.html", {"form": form})
+
+
+def reminder(request):
+    if request.method == "POST":
+        form = ReminderForm(request.POST)
+        if form.is_valid():
+            subject = "Reminder"
+            to_email = form.cleaned_data.get("to_email")
+            message = form.cleaned_data.get("message")
+            when = form.cleaned_data.get("when")
+            tasks.send_remind.apply_async(kwargs={"subject": subject,
+                                                  "message": loader.render_to_string("mac/remind_email.html",
+                                                                                     {"message": message,
+                                                                                      "subject": subject}),
+                                                  "email": to_email}, eta=when)
+            return redirect(reverse("mac:index"))
+    else:
+        form = ReminderForm()
+    return render(request, "mac/reminder.html", {"form": form})

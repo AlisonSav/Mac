@@ -21,7 +21,13 @@ class Command(BaseCommand):
         fake = Faker("en_US")
         fake.add_provider(FoodProvider)
         Dish.objects.bulk_create(
-            Dish(dish_title=fake.dish(), for_who=choice(for_who), restaurant_id=randint(5, 13))
+            Dish(
+                dish_title=fake.dish(),
+                for_who=choice(for_who),
+                restaurant_id=randint(5, 13),
+            )
             for _ in range(options.get("count"))
         )
-        self.stdout.write(self.style.SUCCESS(f"Added {options.get('count')} new Dishes"))
+        self.stdout.write(
+            self.style.SUCCESS(f"Added {options.get('count')} new Dishes")
+        )

@@ -41,7 +41,9 @@ class Product(models.Model):  # noqa: DJ10, DJ11
 class Dish(models.Model):  # noqa: DJ10, DJ11
     dish_title = models.CharField(max_length=20)
     for_who = models.CharField(max_length=20, choices=FOR_CHOICES)
-    restaurant = models.ForeignKey(Restaurant, on_delete=models.SET_NULL, blank=True, null=True)
+    restaurant = models.ForeignKey(
+        Restaurant, on_delete=models.SET_NULL, blank=True, null=True
+    )
     product = models.ManyToManyField(Product)
 
     def __str__(self):

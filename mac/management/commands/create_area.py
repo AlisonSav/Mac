@@ -16,6 +16,7 @@ class Command(BaseCommand):
         fake = Faker("en_US")
 
         Area.objects.bulk_create(
-            Area(area_title=fake.street_name(), country=fake.country()) for _ in range(options.get("count"))
+            Area(area_title=fake.street_name(), country=fake.country())
+            for _ in range(options.get("count"))
         )
         self.stdout.write(self.style.SUCCESS(f"Added {options.get('count')} new Areas"))

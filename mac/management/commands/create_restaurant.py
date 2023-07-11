@@ -25,7 +25,11 @@ class Command(BaseCommand):
             if not Restaurant.objects.filter(area_id=i):
                 available_list.append(i)
         Restaurant.objects.bulk_create(
-            Restaurant(title=fake.company(), size=choice(size), area_id=choice(available_list))
+            Restaurant(
+                title=fake.company(), size=choice(size), area_id=choice(available_list)
+            )
             for _ in range(options.get("count"))
         )
-        self.stdout.write(self.style.SUCCESS(f"Added {options.get('count')} new Restaurants"))
+        self.stdout.write(
+            self.style.SUCCESS(f"Added {options.get('count')} new Restaurants")
+        )

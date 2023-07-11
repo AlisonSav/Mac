@@ -1,0 +1,19 @@
+{% extends 'mac/base.html' %}
+
+
+{% block title %} Index {% endblock title %}
+{% load static %}
+{% block css_additional %}
+    <link rel="stylesheet" href="{% static 'mac/style.css' %}">
+{% endblock css_additional %}
+{% block content %}
+    <form action="{% url 'mac:reminder' %}" method="POST">
+        {% csrf_token %}
+        <fieldset>
+            <legend><h2>Reminder... </h2></legend>
+            {{ form.as_p }}
+            <input type="submit" value="Go!">
+        </fieldset>
+    </form>
+    {% include 'mac/return_index.html' %}
+{% endblock content %}
