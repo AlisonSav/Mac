@@ -18,3 +18,8 @@ def send_remind(subject, email, message):
                           fail_silently=False,
                           )
     return mail_sent
+
+
+@shared_task
+def create_news():
+    pass

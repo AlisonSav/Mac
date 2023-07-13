@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "django_celery_results",
 
+    "bee",
     "mac",
 ]
 # fmt: on
