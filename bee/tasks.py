@@ -8,7 +8,7 @@ from core import settings
 
 
 @shared_task
-def create_news():
+def add_quote():
     index_link = f"https://quotes.toscrape.com"
     page = 1
     quotes_count = 0

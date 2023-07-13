@@ -18,7 +18,7 @@ app.config_from_object("django.conf:settings", namespace="CELERY")
 app.autodiscover_tasks()
 app.conf.beat_schedule = {
     "add-every-2-hour": {
-        "task": "bee.tasks.create_news",
+        "task": "bee.tasks.add_quote",
         "schedule": crontab(hour="1-23/2"),
     },
     "add-every-15-seconds": {
