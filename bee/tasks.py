@@ -29,7 +29,6 @@ def add_quote():
             text = quote.find("span", class_="text").text
             author = quote.find("small", class_="author").text
             author_link = quote.find("a").get("href")
-            Author.objects.exists()
             if not Author.objects.filter(name=author).exists():
                 about_author = requests.get(index_link + author_link)
                 soup = BeautifulSoup(about_author.text, "html.parser")
