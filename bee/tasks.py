@@ -9,7 +9,7 @@ from core import settings
 
 @shared_task
 def add_quote():
-    index_link = f"https://quotes.toscrape.com"
+    BASE_URL = f"https://quotes.toscrape.com"
     page = 1
     quotes_count = 0
     quote_dict = {}
@@ -30,7 +30,7 @@ def add_quote():
             author = quote.find("small", class_="author").text
             author_link = quote.find("a").get("href")
             if not Author.objects.filter(name=author).exists():
-                about_author = requests.get(index_link + author_link)
+                about_author = requests.get(BASE_URL + author_link)
                 soup = BeautifulSoup(about_author.text, "html.parser")
                 about = soup.findAll("div", class_="author-details")
                 for a in about:
