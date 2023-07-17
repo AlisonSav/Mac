@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from bee.models import Quote, Author
+from bee.models import Author, Quote
 
 
 @admin.register(Quote)

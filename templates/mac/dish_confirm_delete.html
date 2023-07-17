@@ -5,17 +5,11 @@
     <link rel="stylesheet" href="{% static 'mac/style.css' %}">
 {% endblock css_additional %}
 {% block content %}
-    <form action="{% url 'mac:dish_detail' dish.id %}" method="GET">
+    <form action="{% url 'mac:dish_delete' dish.id %}" method="POST">
         {% csrf_token %}
         <fieldset>
-            <legend><h2>Dish Information: </h2></legend>
-            <h3>{{ dish }}</h3>
-            <ul>In: {{ dish.restaurant }}</ul>
-            <br>
-            <br>
-            <a href="{% url 'mac:dish_update' dish.id %}">Update Dish</a>
-            <br>
-            <a href="{% url 'mac:dish_delete' dish.id %}">Delete Dish</a>
+            <h3>Are you sure? </h3>
+            <input type="submit" value="Confirm">
         </fieldset>
     </form>
     <a href="{% url 'mac:dish_list' %}">Return to Dish list</a>

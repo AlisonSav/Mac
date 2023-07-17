@@ -3,13 +3,13 @@ from bs4 import BeautifulSoup
 from celery import shared_task
 from django.core.mail import send_mail
 
-from bee.models import Quote, Author
+from bee.models import Author, Quote
 from core import settings
 
 
 @shared_task
 def add_quote():
-    BASE_URL = f"https://quotes.toscrape.com"
+    BASE_URL = "https://quotes.toscrape.com"
     page = 1
     quotes_count = 0
     quote_dict = {}
@@ -43,7 +43,6 @@ def add_quote():
                 quote_dict[text] = author.id
                 quotes_count += 1
                 if quotes_count == 5:
-                    print(quote_dict)
                     Quote.objects.bulk_create(
                         Quote(quote=text, author_id=author) for text, author in quote_dict.items())
                     return

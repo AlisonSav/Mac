@@ -156,3 +156,5 @@ CELERY_TIMEZONE = TIME_ZONE
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 NOREPLY_EMAIL = "noreply@hillel.io"
+
+MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"

@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Author(models.Model):
+class Author(models.Model):  # noqa: DJ10, DJ11
     name = models.CharField(max_length=30)
     born_date = models.CharField(max_length=70)
     born_loc = models.CharField(max_length=50)
@@ -11,7 +11,7 @@ class Author(models.Model):
         return f"Author: {self.name}, born: {self.born_date}"
 
 
-class Quote(models.Model):
+class Quote(models.Model):  # noqa: DJ10, DJ11
     quote = models.TextField(unique=True)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
 

@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 SIZE_CHOICES = [
     ("S", "Small"),
@@ -48,3 +49,6 @@ class Dish(models.Model):  # noqa: DJ10, DJ11
 
     def __str__(self):
         return f"Dish: {self.dish_title}, {self.for_who}, {self.restaurant}"
+
+    def get_absolute_url(self):
+        return reverse('mac:dish_detail', kwargs={'pk': self.pk})

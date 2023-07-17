@@ -7,14 +7,17 @@
 {% block content %}
     <form action="{% url 'mac:dish_list' %}" method="GET">
         {% csrf_token %}
+        <a href="{% url 'admin:index' %}">Login</a>
         <fieldset>
             <legend><h2>Dishes list: </h2></legend>
             <ul>
                 {% for di in dish %}
-                    <li><a href="{% url 'mac:dish_detail' di.id %}">{{ di }}</a>   Product count: {{ di.product_count }}</li>
+                    <li><a href="{% url 'mac:dish_detail' di.id %}">{{ di }}</a> Product count: {{ di.product_count }}
+                    </li>
                 {% endfor %}
             </ul>
         </fieldset>
     </form>
+    <a href="{% url 'mac:dish_create' %}">Create Dish</a>
     {% include 'mac/return_index.html' %}
 {% endblock content %}
