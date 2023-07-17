@@ -131,11 +131,16 @@ def reminder(request):
             to_email = form.cleaned_data.get("to_email")
             message = form.cleaned_data.get("message")
             when = form.cleaned_data.get("when")
-            tasks.send_remind.apply_async(kwargs={"subject": subject,
-                                                  "message": loader.render_to_string("mac/remind_email.html",
-                                                                                     {"message": message,
-                                                                                      "subject": subject}),
-                                                  "email": to_email}, eta=when)
+            tasks.send_remind.apply_async(
+                kwargs={
+                    "subject": subject,
+                    "message": loader.render_to_string(
+                        "mac/remind_email.html", {"message": message, "subject": subject}
+                    ),
+                    "email": to_email,
+                },
+                eta=when,
+            )
             return redirect(reverse("mac:index"))
     else:
         form = ReminderForm()

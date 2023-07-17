@@ -17,10 +17,6 @@ class Command(BaseCommand):
                 try:
                     user = User.objects.get(pk=user_id)
                     user.delete()
-                    self.stdout.write(
-                        self.style.SUCCESS(f"User {user_id} deleted with success!")
-                    )
+                    self.stdout.write(self.style.SUCCESS(f"User {user_id} deleted with success!"))
                 except User.DoesNotExist:
-                    self.stdout.write(
-                        self.style.WARNING(f"User with id {user_id} does not exist.")
-                    )
+                    self.stdout.write(self.style.WARNING(f"User with id {user_id} does not exist."))

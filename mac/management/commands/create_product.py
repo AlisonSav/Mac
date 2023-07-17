@@ -20,9 +20,6 @@ class Command(BaseCommand):
         fake = Faker("en_US")
         fake.add_provider(FoodProvider)
         Product.objects.bulk_create(
-            Product(product_title=fake.ingredient(), energy=randint(1, 100))
-            for _ in range(options.get("count"))
+            Product(product_title=fake.ingredient(), energy=randint(1, 100)) for _ in range(options.get("count"))
         )
-        self.stdout.write(
-            self.style.SUCCESS(f"Added {options.get('count')} new products")
-        )
+        self.stdout.write(self.style.SUCCESS(f"Added {options.get('count')} new products"))

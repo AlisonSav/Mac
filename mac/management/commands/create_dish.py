@@ -28,6 +28,4 @@ class Command(BaseCommand):
             )
             for _ in range(options.get("count"))
         )
-        self.stdout.write(
-            self.style.SUCCESS(f"Added {options.get('count')} new Dishes")
-        )
+        self.stdout.write(self.style.SUCCESS(f"Added {options.get('count')} new Dishes"))

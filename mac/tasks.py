@@ -11,15 +11,11 @@ def add(x, y):
 
 @shared_task
 def send_remind(subject, email, message):
-    mail_sent = send_mail(subject,
-                          message,
-                          settings.NOREPLY_EMAIL,
-                          [email],
-                          fail_silently=False,
-                          )
+    mail_sent = send_mail(
+        subject,
+        message,
+        settings.NOREPLY_EMAIL,
+        [email],
+        fail_silently=False,
+    )
     return mail_sent
-
-
-@shared_task
-def create_news():
-    pass

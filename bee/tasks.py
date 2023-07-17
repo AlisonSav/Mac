@@ -19,11 +19,13 @@ def add_quote():
         soup = BeautifulSoup(r.text, "html.parser")
         quotes = soup.findAll("div", class_="quote")
         if not soup("span", class_="text"):
-            send_mail("No quotes",
-                      "O no! You are have not any quotes",
-                      settings.NOREPLY_EMAIL,
-                      ["ohoho@ho.com"],
-                      fail_silently=False)
+            send_mail(
+                "No quotes",
+                "O no! You are have not any quotes",
+                settings.NOREPLY_EMAIL,
+                ["ohoho@ho.com"],
+                fail_silently=False,
+            )
             return
         for quote in quotes:
             text = quote.find("span", class_="text").text
@@ -44,6 +46,7 @@ def add_quote():
                 quotes_count += 1
                 if quotes_count == 5:
                     Quote.objects.bulk_create(
-                        Quote(quote=text, author_id=author) for text, author in quote_dict.items())
+                        Quote(quote=text, author_id=author) for text, author in quote_dict.items()
+                    )
                     return
         page += 1

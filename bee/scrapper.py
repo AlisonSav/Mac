@@ -18,8 +18,12 @@ def main():
         r = requests.get(link + f"?page={i + 1}")
         cards = soup.find_all("div", class_="col-lg-4 col-md-6 mb-4")
         for card in cards:
-            lst.append({"title": card.find("h4").get_text(strip=True),
-                        "price": float(card.find("h5").get_text(strip=True)[1:])})
+            lst.append(
+                {
+                    "title": card.find("h4").get_text(strip=True),
+                    "price": float(card.find("h5").get_text(strip=True)[1:]),
+                }
+            )
     for row in lst:
         print(row)  # noqa: T201
 

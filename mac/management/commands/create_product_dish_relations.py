@@ -18,8 +18,4 @@ class Command(BaseCommand):
             dish = Dish.objects.get(id=randint(1, 100))
             product = Product.objects.get(id=randint(1, 100))
             dish.product.add(product)
-        self.stdout.write(
-            self.style.SUCCESS(
-                f"Added {options.get('count')} new Dish-Product relations"
-            )
-        )
+        self.stdout.write(self.style.SUCCESS(f"Added {options.get('count')} new Dish-Product relations"))
