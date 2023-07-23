@@ -24,7 +24,7 @@ class Command(BaseCommand):
             Dish(
                 dish_title=fake.dish(),
                 for_who=choice(for_who),
-                restaurant_id=randint(5, 13),
+                restaurant_id=randint(1, 40),
             )
             for _ in range(options.get("count"))
         )

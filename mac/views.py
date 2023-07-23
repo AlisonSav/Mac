@@ -3,6 +3,8 @@ from django.db.models import Count, Prefetch
 from django.shortcuts import redirect, render
 from django.template import loader
 from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 from django.core.mail import send_mail
 from django.conf import settings
@@ -12,6 +14,7 @@ from mac.models import Area, Dish, Product, Restaurant
 from mac.forms import ContactForm, ReminderForm
 
 
+@cache_page(10)
 def index(request):
     return render(request, "mac/index.html")
 
@@ -52,7 +55,6 @@ class RestaurantDetailView(DetailView):
 
 class ProductListView(ListView):
     model = Product
-    template_name = "mac/product_list.html"
     context_object_name = "product"
     paginate_by = 20
 
@@ -67,15 +69,20 @@ class ProductDetailView(DetailView):
         return Product.objects.prefetch_related("dish_set").all()
 
 
+@method_decorator(cache_page(15), "get")
 class DishListView(ListView):
     model = Dish
     context_object_name = "dish"
-    paginate_by = 20
+    paginate_by = 750
 
     def get_queryset(self):
         dishes_with_product_count = Dish.objects.annotate(product_count=Count("product__id"))
         r = Restaurant.objects.prefetch_related(Prefetch("dish_set", queryset=dishes_with_product_count))
         return dishes_with_product_count
+
+    # @method_decorator(cache_page(15))
+    # def get(self, request, *args, **kwargs):
+    #     return super(DishListView, self).get(self, request, *args, **kwargs)
 
 
 class DishDetailView(DetailView):

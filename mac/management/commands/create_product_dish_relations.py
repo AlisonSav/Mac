@@ -15,7 +15,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for _ in range(options.get("count")):
-            dish = Dish.objects.get(id=randint(1, 100))
-            product = Product.objects.get(id=randint(1, 100))
-            dish.product.add(product)
+            try:
+                dish = Dish.objects.get(id=randint(1, 1300))
+                product = Product.objects.get(id=randint(1, 100))
+                dish.product.add(product)
+            except IndexError:
+                print("Invalid dish")  # noqa T201
         self.stdout.write(self.style.SUCCESS(f"Added {options.get('count')} new Dish-Product relations"))
